@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática 02 - Troca classe cor e texto de elemento</title>
+    <style>
+        #target {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .active {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prática 02 - Troca classe cor e texto de elemento</h1>
+    <div id="target">Elemento Alvo</div>
+    <div>
+        <button id="btnAlternar">Alternar Classe</button>
+        <button id="btnCor">Mudar Cor</button>
+        <button id="btnTexto">Mudar Texto</button>
+        <button id="btnReset">Resetar</button>
+    </div>
+    <div id="info">Classe atual: nenhuma | Cor atual: white</div>
+
+    <script>
+        // Conceitos dos slides usados:
+        // - DOM: JavaScript pode alterar classes CSS, alterar estilos CSS, alterar elementos HTML
+        // - Event Listener: função executada quando um evento ocorre
+        // Todos os botões usam addEventListener
+
+        const target = document.getElementById('target');
+        const info = document.getElementById('info');
+        const btnAlternar = document.getElementById('btnAlternar');
+        const btnCor = document.getElementById('btnCor');
+        const btnTexto = document.getElementById('btnTexto');
+        const btnReset = document.getElementById('btnReset');
+
+        function updateInfo() {
+            const classe = target.classList.contains('active') ? 'active' : 'nenhuma';
+            const computedStyle = getComputedStyle(target);
+            let cor;
+            const bg = computedStyle.backgroundColor;
+            if (bg === 'rgb(255, 255, 255)') cor = 'white';
+            else if (bg === 'rgb(255, 255, 0)') cor = 'yellow';
+            else if (bg === 'rgb(255, 0, 0)') cor = 'red';
+            else cor = bg;
+            info.innerText = `Classe atual: ${classe} | Cor atual: ${cor}`;
+        }
+
+        // Event Listener para Alternar Classe
+        btnAlternar.addEventListener('click', function() {
+            // DOM: alterar classes CSS com classList.toggle
+            target.classList.toggle('active');
+            updateInfo();
+        });
+
+        // Event Listener para Mudar Cor
+        btnCor.addEventListener('click', function() {
+            // DOM: alterar estilos CSS diretamente
+            target.style.backgroundColor = 'red';
+            updateInfo();
+        });
+
+        // Event Listener para Mudar Texto
+        btnTexto.addEventListener('click', function() {
+            // DOM: alterar elementos HTML com innerText
+            target.innerText = 'Texto Alterado';
+            updateInfo();
+        });
+
+        // Event Listener para Resetar
+        btnReset.addEventListener('click', function() {
+            // Restaurar estado original (DOM: remover classe, limpar estilo inline, restaurar texto)
+            target.classList.remove('active');
+            target.style.backgroundColor = '';
+            target.innerText = 'Elemento Alvo';
+            updateInfo();
+        });
+
+        // Inicializar display
+        updateInfo();
+    </script>
+</body>
+</html>

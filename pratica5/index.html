@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática 05 - Capturando localização</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #clear {
+            background-color: #dc3545;
+        }
+        #clear:hover {
+            background-color: #c82333;
+        }
+        #info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        #info p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        #info span {
+            font-weight: bold;
+            color: #007bff;
+        }
+        #maps {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+        }
+        #maps:hover {
+            background-color: #218838;
+        }
+        #error {
+            color: #dc3545;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prática 05 - Capturando localização</h1>
+    <button id="obterLocalizacao">Obter Localização</button>
+    <button id="limpar">Limpar</button>
+    <div id="info">
+        <p>Latitude: <span id="latitude">-</span></p>
+        <p>Longitude: <span id="longitude">-</span></p>
+        <p>Precisão (accuracy): <span id="precisao">-</span></p>
+        <p>Altitude: <span id="altitude">-</span></p>
+        <p>Velocidade: <span id="velocidade">-</span></p>
+        <a id="mapsLink" href="#" target="_blank">Abrir no Google Maps</a>
+        <p id="erro"></p>
+    </div>
+
+    <script>
+        // BOM (Browser Object Model): objeto navigator (listado como parte do BOM nos slides) dá acesso ao navegador
+        // JS client-side: executa no computador do usuário, obtém informações do dispositivo (slides)
+
+        const btnObter = document.getElementById('obterLocalizacao');
+        const btnLimpar = document.getElementById('limpar');
+
+        // Event Listener: função executada quando evento de clique ocorre (slides)
+        btnObter.addEventListener('click', function() {
+            // navigator.geolocation.getCurrentPosition - API de geolocalização do navegador (slides)
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    // Sucesso: exibe dados
+                    document.getElementById('latitude').textContent = position.coords.latitude.toFixed(6);
+                    document.getElementById('longitude').textContent = position.coords.longitude.toFixed(6);
+                    document.getElementById('precisao').textContent = position.coords.accuracy.toFixed(2) + ' metros';
+
+                    const altitude = position.coords.altitude;
+                    document.getElementById('altitude').textContent = altitude !== null ? altitude.toFixed(2) + ' m' : 'Não disponível';
+
+                    const velocidade = position.coords.speed;
+                    document.getElementById('velocidade').textContent = velocidade !== null ? velocidade.toFixed(2) + ' m/s' : 'Não disponível';
+
+                    // Link para Google Maps
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    document.getElementById('mapsLink').href = `https://www.google.com/maps?q=${lat},${lng}`;
+                    document.getElementById('mapsLink').style.display = 'block';
+
+                    // Limpa erro
+                    document.getElementById('erro').textContent = '';
+                },
+                function(error) {
+                    // Tratamento de erros básico (permissão negada)
+                    let mensagem = '';
+                    if (error.code === error.PERMISSION_DENIED) {
+                        mensagem = 'Permissão negada pelo usuário.';
+                    } else {
+                        mensagem = 'Erro ao obter localização: ' + error.message;
+                    }
+                    document.getElementById('erro').textContent = mensagem;
+                }
+            );
+        });
+
+        // Event Listener para botão Limpar
+        btnLimpar.addEventListener('click', function() {
+            document.getElementById('latitude').textContent = '-';
+            document.getElementById('longitude').textContent = '-';
+            document.getElementById('precisao').textContent = '-';
+            document.getElementById('altitude').textContent = '-';
+            document.getElementById('velocidade').textContent = '-';
+            document.getElementById('mapsLink').style.display = 'none';
+            document.getElementById('erro').textContent = '';
+        });
+    </script>
+</body>
+</html>

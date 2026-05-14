@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática 01 - Adicionando conteúdo HTML</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #content {
+            border: 2px solid #333;
+            min-height: 200px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .card {
+            background: #e8f4fd;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        #counter {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prática 01 - Adicionando conteúdo HTML</h1>
+    
+    <div id="content"></div>
+    
+    <div>
+        <button id="addCard">Adicionar Card</button>
+        <button id="addPara">Adicionar Parágrafo</button>
+        <button id="removeLast">Remover Último</button>
+    </div>
+    
+    <p>Contador de elementos: <span id="counter">0</span></p>
+    
+    <script>
+        // Conceitos dos slides: DOM e Event Listener
+        const content = document.getElementById('content');
+        const counterSpan = document.getElementById('counter');
+        const btnAddCard = document.getElementById('addCard');
+        const btnAddPara = document.getElementById('addPara');
+        const btnRemoveLast = document.getElementById('removeLast');
+
+        // Função para atualizar o contador (DOM: alterar elementos)
+        function updateCounter() {
+            counterSpan.textContent = content.children.length;
+        }
+
+        // Event Listener: Adicionar Card (DOM: alterar/adicionar elementos com innerHTML)
+        btnAddCard.addEventListener('click', () => {
+            const cardHTML = `
+                <div class="card">
+                    <h3>Título do Card</h3>
+                    <p>Este é o conteúdo do card adicionado via innerHTML.</p>
+                </div>
+            `;
+            content.innerHTML += cardHTML;
+            updateCounter();
+        });
+
+        // Event Listener: Adicionar Parágrafo (DOM: adicionar elementos com createElement e appendChild)
+        btnAddPara.addEventListener('click', () => {
+            const p = document.createElement('p');
+            p.textContent = 'Este é um parágrafo adicionado com createElement e appendChild.';
+            p.style.margin = '10px 0';
+            p.style.padding = '10px';
+            p.style.backgroundColor = '#f0f8ff';
+            p.style.borderLeft = '4px solid #007bff';
+            content.appendChild(p);
+            updateCounter();
+        });
+
+        // Event Listener: Remover Último (DOM: remover elementos com removeChild)
+        btnRemoveLast.addEventListener('click', () => {
+            if (content.lastElementChild) {
+                content.removeChild(content.lastElementChild);
+                updateCounter();
+            }
+        });
+
+        // Inicializar contador
+        updateCounter();
+    </script>
+</body>
+</html>

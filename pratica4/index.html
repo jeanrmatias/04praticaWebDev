@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática 04 - Adiciona novos elementos com JS</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { display: flex; align-items: center; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; }
+        li.completed span { text-decoration: line-through; color: #888; }
+        input[type="text"] { flex: 1; margin-right: 10px; padding: 5px; }
+        button { padding: 5px 10px; margin-left: 5px; }
+        #counters { margin-top: 20px; display: flex; gap: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Prática 04 - Adiciona novos elementos com JS</h1>
+    <div>
+        <input id="taskInput" type="text" placeholder="Digite uma tarefa">
+        <button id="addBtn">Adicionar</button>
+    </div>
+    <ul id="taskList"></ul>
+    <div>
+        <button id="removeAllBtn">Remover Todas</button>
+    </div>
+    <div id="counters">
+        <span>Total: <span id="total">0</span></span>
+        <span>Concluídas: <span id="completed">0</span></span>
+        <span>Pendentes: <span id="pending">0</span></span>
+    </div>
+
+    <script>
+        // Elementos principais
+        const taskInput = document.getElementById('taskInput');
+        const addBtn = document.getElementById('addBtn');
+        const taskList = document.getElementById('taskList');
+        const removeAllBtn = document.getElementById('removeAllBtn');
+        const totalSpan = document.getElementById('total');
+        const completedSpan = document.getElementById('completed');
+        const pendingSpan = document.getElementById('pending');
+
+        // Event Listener: botão Adicionar
+        addBtn.addEventListener('click', addTask);
+
+        // Event Listener: botão Remover Todas
+        removeAllBtn.addEventListener('click', removeAllTasks);
+
+        function addTask() {
+            if (!taskInput.value.trim()) return;
+
+            // DOM: adicionar elementos com createElement
+            const li = document.createElement('li');
+
+            // Checkbox com Event Listener
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.addEventListener('change', function() {
+                // DOM: alterar estilos CSS via classList
+                if (this.checked) {
+                    li.classList.add('completed');
+                } else {
+                    li.classList.remove('completed');
+                }
+                updateCounters();
+            });
+
+            // Texto da tarefa (OOP: propriedades dos objetos elemento - textContent)
+            const textSpan = document.createElement('span');
+            textSpan.textContent = taskInput.value;
+
+            // Botão Remover com Event Listener
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remover';
+            removeBtn.addEventListener('click', function() {
+                // DOM: remover elementos com removeChild
+                taskList.removeChild(li);
+                updateCounters();
+            });
+
+            // Adicionar filhos ao li (DOM: appendChild)
+            li.appendChild(checkbox);
+            li.appendChild(textSpan);
+            li.appendChild(removeBtn);
+
+            // Adicionar li à ul (DOM: adicionar elementos com appendChild)
+            taskList.appendChild(li);
+
+            taskInput.value = '';
+            updateCounters();
+        }
+
+        function removeAllTasks() {
+            // DOM: remover elementos com removeChild (loop manual)
+            while (taskList.firstChild) {
+                taskList.removeChild(taskList.firstChild);
+            }
+            updateCounters();
+        }
+
+        function updateCounters() {
+            // OOP: lendo propriedades dos objetos elemento (classList, children)
+            const total = taskList.children.length;
+            let completed = 0;
+            for (let i = 0; i < taskList.children.length; i++) {
+                if (taskList.children[i].classList.contains('completed')) {
+                    completed++;
+                }
+            }
+            const pending = total - completed;
+
+            totalSpan.textContent = total;
+            completedSpan.textContent = completed;
+            pendingSpan.textContent = pending;
+        }
+
+        // Inicializar contadores
+        updateCounters();
+    </script>
+</body>
+</html>

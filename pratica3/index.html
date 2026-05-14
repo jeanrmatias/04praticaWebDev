@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prática 03 - Leitura de forms e calcula</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        form { display: flex; flex-direction: column; max-width: 300px; }
+        label { margin-top: 10px; font-weight: bold; }
+        input { padding: 5px; margin-bottom: 10px; }
+        button { padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        #resultado { margin: 20px 0; padding: 10px; background: #f8f9fa; border: 1px solid #dee2e6; }
+        table { border-collapse: collapse; width: 100%; max-width: 500px; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f8f9fa; }
+        #limpar { background: #dc3545; margin-top: 10px; }
+        #limpar:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <h1>Prática 03 - Leitura de forms e calcula</h1>
+    <p>Calculadora de IMC usando DOM, Event Listener e OOP (objeto Math).</p>
+    
+    <form id="imcForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required>
+        
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" step="0.01" min="0" required>
+        
+        <label for="altura">Altura (m):</label>
+        <input type="number" id="altura" step="0.01" min="0" required>
+        
+        <button type="submit">Calcular IMC</button>
+    </form>
+    
+    <div id="resultado"></div>
+    
+    <table id="historico">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>IMC</th>
+                <th>Classificação</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    
+    <button id="limpar">Limpar Histórico</button>
+    
+    <script>
+        // Event Listener: função executada no evento submit do formulário (conceito dos slides)
+        document.getElementById('imcForm').addEventListener('submit', function(event) {
+            // Event Listener: preventDefault para não recarregar a página
+            event.preventDefault();
+            
+            // DOM: acessando elementos e seus atributos value (conceito dos slides)
+            const nome = document.getElementById('nome').value.trim();
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+            
+            // Validação básica
+            if (!nome) {
+                alert('Nome é obrigatório!');
+                return;
+            }
+            if (isNaN(peso) || peso <= 0) {
+                alert('Peso deve ser um número maior que 0!');
+                return;
+            }
+            if (isNaN(altura) || altura <= 0) {
+                alert('Altura deve ser um número maior que 0!');
+                return;
+            }
+            
+            // OOP: uso de objetos (método Math.pow para cálculo, conceito dos slides)
+            const imc = peso / Math.pow(altura, 2);
+            
+            // Classificação do IMC
+            let classificacao;
+            if (imc < 18.5) {
+                classificacao = 'Abaixo do peso';
+            } else if (imc < 25) {
+                classificacao = 'Normal';
+            } else if (imc < 30) {
+                classificacao = 'Sobrepeso';
+            } else {
+                classificacao = 'Obesidade';
+            }
+            
+            // DOM: JavaScript alterando elementos HTML (exibir resultado)
+            document.getElementById('resultado').innerHTML = 
+                `<strong>${nome}</strong>, seu IMC é ${imc.toFixed(2)} - ${classificacao}`;
+            
+            // DOM: adicionando elementos à tabela (conceito dos slides)
+            const tbody = document.querySelector('#historico tbody');
+            const row = tbody.insertRow();
+            row.insertCell(0).textContent = nome;
+            row.insertCell(1).textContent = imc.toFixed(2);
+            row.insertCell(2).textContent = classificacao;
+            
+            // Limpar formulário
+            document.getElementById('imcForm').reset();
+        });
+        
+        // Event Listener para botão Limpar Histórico
+        document.getElementById('limpar').addEventListener('click', function() {
+            // DOM: removendo elementos da tabela
+            const tbody = document.querySelector('#historico tbody');
+            tbody.innerHTML = '';
+            // DOM: alterando elemento de resultado
+            document.getElementById('resultado').innerHTML = '';
+        });
+    </script>
+</body>
+</html>
