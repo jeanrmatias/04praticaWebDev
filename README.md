@@ -22,7 +22,7 @@ Abra o arquivo `index.html` de cada pasta diretamente no navegador.
 
 ① **Prática 01 - Adicionando Conteúdo HTML**
 
-**Conceitos dos slides abordados:** DOM (alteração e adição/remoção de elementos HTML) e Event Listener.
+**Conceitos abordados:** DOM (alteração e adição/remoção de elementos HTML) e Event Listener.
 
 **Métodos JS demonstrados:** `innerHTML`, `createElement`, `appendChild`, `removeChild`.
 
@@ -30,7 +30,7 @@ Abra o arquivo `index.html` de cada pasta diretamente no navegador.
 
 ② **Prática 02 - Troca de Classe, Cor e Texto de Elemento**
 
-**Conceitos dos slides abordados:** DOM (classes, estilos CSS, texto de elementos) e Event Listener.
+**Conceitos abordados:** DOM (classes, estilos CSS, texto de elementos) e Event Listener.
 
 **Métodos JS demonstrados:** `classList.toggle`, `style.backgroundColor`, `innerText`.
 
@@ -38,7 +38,7 @@ Abra o arquivo `index.html` de cada pasta diretamente no navegador.
 
 ③ **Prática 03 - Leitura de Forms e Cálculo**
 
-**Conceitos dos slides abordados:** DOM (leitura de formulários, manipulação de tabelas), Event Listener (submit) e OOP (Math.pow).
+**Conceitos abordados:** DOM (leitura de formulários, manipulação de tabelas), Event Listener (submit) e OOP (Math.pow).
 
 **Métodos JS demonstrados:** `value`, `innerHTML`, `insertRow`.
 
@@ -46,7 +46,7 @@ Abra o arquivo `index.html` de cada pasta diretamente no navegador.
 
 ④ **Prática 04 - Adiciona Novos Elementos com JS**
 
-**Conceitos dos slides abordados:** DOM (criação, adição e remoção de elementos), Event Listener e OOP (propriedades de objetos).
+**Conceitos abordados:** DOM (criação, adição e remoção de elementos), Event Listener e OOP (propriedades de objetos).
 
 **Métodos JS demonstrados:** `createElement`, `appendChild`, `removeChild`, `classList`.
 
@@ -54,7 +54,7 @@ Abra o arquivo `index.html` de cada pasta diretamente no navegador.
 
 ⑤ **Prática 05 - Capturando Localização**
 
-**Conceitos dos slides abordados:** BOM (navigator.geolocation), Event Listener e JavaScript client-side.
+**Conceitos abordados:** BOM (navigator.geolocation), Event Listener e JavaScript client-side.
 
 **Métodos JS demonstrados:** `navigator.geolocation.getCurrentPosition()`.
 
